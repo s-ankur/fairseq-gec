@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 source ./config.sh
 
+set -e
+set -x
+
 pretrained_model=./out/models_pretrain/checkpoint9.pt
 
 CUDA_VISIBLE_DEVICES=$device nohup python train.py $DATA_BIN \

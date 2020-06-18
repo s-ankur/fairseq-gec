@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+set -e
+set -x
+
 device=0
 if [ $# -ge 1 ]; then
     device=$1
