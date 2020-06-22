@@ -9,7 +9,7 @@ pretrained_model=./out/models_pretrain/checkpoint9.pt
 CUDA_VISIBLE_DEVICES=$device nohup python train.py $DATA_BIN \
 --save-dir $MODELS \
 --seed 4321 \
---max-epoch 9 \
+--max-epoch 15 \
 --batch-size 64 \
 --max-tokens 3000 \
 --train-subset train \
@@ -27,7 +27,6 @@ CUDA_VISIBLE_DEVICES=$device nohup python train.py $DATA_BIN \
 --no-progress-bar \
 --log-interval 1000 \
 --positive-label-weight 1.2 \
---pretrained-model $pretrained_model \
 --copy-attention --copy-attention-heads 1 > $OUT/log$exp.out 2>&1 &
 
 tail -f $OUT/log$exp.out
