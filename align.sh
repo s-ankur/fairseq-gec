@@ -1,4 +1,11 @@
+#!/usr/bin/env bash
+
+set -e
+set -x
+
 source ./config.sh
+
+rm -rf data_align
 mkdir data_align
 
 trainpref='data/train_merge'
