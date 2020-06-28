@@ -13,7 +13,6 @@ copy_params='--copy-ext-dict'
 # set common params between train/test
 common_params='--source-lang src --target-lang tgt  
 --padding-factor 1 
---srcdict ./dicts/dict.src.txt 
 --joined-dictionary 
 '
 
@@ -27,17 +26,21 @@ $copy_params \
 --trainpref $trainpref \
 --validpref $validpref \
 --destdir $DATA_BIN \
---output-format binary \
---alignfile $trainpref.forward \
-| tee $OUT/data_bin.log
+--thresholdsrc 25 \
+--thresholdtgt 25 \
+--alignfile $trainpref.forward
+
+
 
 # preprocess test
 python preprocess.py \
 $common_params \
 $copy_params \
+--srcdict out/data_bin/dict.src.txt \
 --testpref data/test \
 --destdir $DATA_RAW \
 --output-format raw \
-| tee $OUT/data_raw.log
+--thresholdsrc 25 \
+--thresholdtgt 25 
 
 mv $DATA_RAW/test.src-tgt.src $DATA_RAW/test.src-tgt.src.old

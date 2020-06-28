@@ -26,7 +26,7 @@ The script produces the following files under --output_dir:
 """
 
 import argparse
-import os
+import os,sys
 from itertools import zip_longest
 
 
@@ -72,6 +72,8 @@ def main():
         FASTALIGN=fast_align_bin,
         JOINED=joined_file,
         FWD=fwd_align_file)
+    fwd_fast_align_cmd=fwd_fast_align_cmd
+    print(fwd_fast_align_cmd,file=sys.stderr)
     assert os.system(fwd_fast_align_cmd) == 0
 
     # run backward alignment
@@ -80,6 +82,8 @@ def main():
         FASTALIGN=fast_align_bin,
         JOINED=joined_file,
         BWD=bwd_align_file)
+    bwd_align_file=bwd_align_file
+    print(bwd_fast_align_cmd,file=sys.stderr)
     assert os.system(bwd_fast_align_cmd) == 0
 
     # run symmetrization
@@ -94,6 +98,8 @@ def main():
         HEURISTIC=args.sym_heuristic,
         SYMAL=symal_bin
     )
+    sym_cmd=sym_cmd
+    print(sym_cmd,file=sys.stderr)
     assert os.system(sym_cmd) == 0
 
 

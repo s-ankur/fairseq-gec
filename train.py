@@ -1,4 +1,4 @@
-#!/usr/bin/env python3 -u
+#!/usr/bin/env python -W ignore::DeprecationWarning
 # Copyright (c) 2017-present, Facebook, Inc.
 # All rights reserved.
 #
@@ -8,7 +8,15 @@
 """
 Train a new model on one or across multiple GPUs.
 """
+import traceback
+import warnings
+import sys
 
+
+
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
+import tensorflow as tf
 import collections
 import itertools
 import os

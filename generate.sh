@@ -2,6 +2,7 @@
 source ./config.sh
 
 set -e
+set -x
 
 ema='ema'
 
