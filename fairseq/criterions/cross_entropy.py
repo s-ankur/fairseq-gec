@@ -7,7 +7,7 @@
 
 import math
 import torch.nn.functional as F
-
+import torch
 from fairseq import utils
 
 from . import FairseqCriterion, register_criterion
@@ -57,9 +57,9 @@ class CrossEntropyCriterion(FairseqCriterion):
         lprobs = lprobs.view(-1, lprobs.size(-1))
         target = model.get_targets(sample, net_output).view(-1)
     
-        target_label = sample['target_label'].view(-1).byte()
+        target_label = sample['target_label'].view(-1).bool()
         neg_target = target.new_tensor(target).masked_fill_(target_label, self.padding_idx)
-        pos_target = target.new_tensor(target).masked_fill_(1-target_label, self.padding_idx)
+        pos_target = target.new_tensor(target).masked_fill_(~target_label, self.padding_idx)
        
         neg_loss = F.nll_loss(lprobs, neg_target, size_average=False, ignore_index=self.padding_idx,
                               reduce=reduce)
