@@ -119,7 +119,7 @@ if __name__ == '__main__':
 
     print("epoch={}, seed={}".format(args.epoch, args.seed))
 
-    ofile_suffix = args.output+args.epoch
+    ofile_suffix = args.output+str(args.epoch)
     file=open(args.input)
     noise(file, ofile_suffix)
 
