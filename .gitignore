@@ -41,4 +41,6 @@ coverage.xml
 
 
 hiwiki.augmented.edits
-
+data/
+out/
+software/
