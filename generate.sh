@@ -36,7 +36,7 @@ for epoch in ${epochs[*]}; do
 
     python ./gec_scripts/revert_split.py $RESULT/output$ema$epoch.txt.split $DATA_RAW/test.idx > $RESULT/output$ema$epoch.txt
 
-    python2 ./gec_scripts/m2scorer/m2scorer -v $RESULT/output$ema$epoch.txt ./data/test.m2 > $RESULT/m2score$ema$exp_$epoch.log
+    python2 ./software/m2scorer/scripts/m2scorer.py -v $RESULT/output$ema$epoch.txt ./data/test.m2 > $RESULT/m2score$ema$exp_$epoch.log
     tail -n 1 $RESULT/m2score$ema$exp_$epoch.log
 done
 
