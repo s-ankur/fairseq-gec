@@ -108,8 +108,8 @@ if __name__ == '__main__':
     import argparse
 
     parser=argparse.ArgumentParser()
-    parser.add_argument("input_file",  default='data/train_himono.tgt', help="input filename")
-    parser.add_argument("output", default='data_art/train_himono_',  help="input filename")
+    parser.add_argument("input_file",  default='data/train_himono.tgt', nargs='?',help="input filename")
+    parser.add_argument("output", default='data_art/train_himono_', nargs='?', help="output filename")
 
     parser.add_argument('-e', '--epoch', type=int, default=10)
     parser.add_argument('-s', '--seed', type=int, default=2468)
