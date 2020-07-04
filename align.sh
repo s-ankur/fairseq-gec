@@ -8,7 +8,7 @@ source ./config.sh
 
 rm -rf data_align
 
-for trainpref in 'data/train_merge' 'data/valid' 'data/test';
+for trainpref in 'data/train_merge';
 do
 mkdir data_align
 

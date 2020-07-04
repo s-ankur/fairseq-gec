@@ -9,7 +9,7 @@ fi
 beam=12
 
 CUDA_VISIBLE_DEVICES=0 python interactive.py $DATA_RAW \
---path ./out/models/checkpoint1.pt \
+--path ./out/models/checkpoint9.pt \
 --beam $beam \
 --nbest $beam \
 --print-alignment \

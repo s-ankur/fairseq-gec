@@ -19,6 +19,10 @@ common_params='--source-lang src --target-lang tgt
 trainpref='data/train_merge'
 validpref='data/valid'
 
+
+trainpref='data/train_merge'
+validpref='data/valid'
+
 # preprocess train/valid
 python preprocess.py \
 $common_params \
@@ -42,5 +46,6 @@ $copy_params \
 --output-format raw \
 --thresholdsrc 25 \
 --thresholdtgt 25 
+
 
 mv $DATA_RAW/test.src-tgt.src $DATA_RAW/test.src-tgt.src.old
