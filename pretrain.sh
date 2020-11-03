@@ -2,7 +2,7 @@
 source ./config.sh
 
 data_epoch=1 
-CUDA_VISIBLE_DEVICES=0,1 nohup python train.py ${DATA_BIN}_${data_epoch} \
+CUDA_VISIBLE_DEVICES=0,1 python3 train.py ${DATA_BIN}_${data_epoch} \
 --save-dir $MODELS \
 --max-epoch $data_epoch \
 --batch-size 64 \
@@ -18,12 +18,10 @@ CUDA_VISIBLE_DEVICES=0,1 nohup python train.py ${DATA_BIN}_${data_epoch} \
 --encoder-attention-heads 8 --decoder-attention-heads 8 \
 --copy-attention-heads 1 \
 --share-all-embeddings \
---no-progress-bar \
 --log-interval 1000 \
 --positive-label-weight 1.3 \
 --no-ema \
 --save-interval-updates 100000 \
 --skip-invalid-size-inputs-valid-test \
---copy-attention --copy-attention-heads 1 > $OUT/log$exp${data_epoch}.out 2>&1 &
+--copy-attention --copy-attention-heads 1
 
-tail -f $OUT/log$exp${data_epoch}.out

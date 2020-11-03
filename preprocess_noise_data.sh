@@ -10,14 +10,13 @@ copy_params='--copy-ext-dict'
 # set common params between train/test
 common_params='--source-lang src --target-lang tgt  
 --padding-factor 1 
---srcdict ./dicts/dict.src.txt 
 --joined-dictionary 
 '
 
 for epoch in {1..9}; do
     echo $epoch
 
-    trainpref=$DATA/train_1b_$epoch
+    trainpref=$DATA/train_himono_$epoch
     validpref=$DATA/valid
 
     # preprocess train/valid
@@ -28,7 +27,6 @@ for epoch in {1..9}; do
     --validpref $validpref \
     --destdir ${DATA_BIN}_art_$epoch \
     --output-format binary \
-    --alignfile $trainpref.forward \
-    | tee $OUT/data_art_bin_$epoch.log
+    --alignfile $trainpref.forward 
 
 done

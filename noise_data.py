@@ -82,53 +82,44 @@ class NoiseInjector(object):
 
     def inject_noise(self, tokens):
         # tgt is a vector of integers
-
-        funcs = [self._add_func, self._shuffle_func, self._replace_func, self._delete_func]
+        #funcs = [self._add_func, self._shuffle_func, self._replace_func, self._delete_func]
+        funcs = [ self._replace_func]
         np.random.shuffle(funcs)
-        
-        pairs = [(i, w) for (i, w) in enumerate(tokens)]
+        pairs = list(enumerate(tokens))
         for f in funcs:
             pairs = f(pairs)
             art, align = self._parse(pairs)
-
         return self._parse(pairs)
 
 
-def save_file(filename, contents):
-    with open(filename, 'w') as ofile:
-        for content in contents:
-            ofile.write(' '.join(content) + '\n')
 
 # make noise from filename
-def noise(filename, ofile_suffix):
-    lines = open(filename).readlines()
-    tgts = [tokenize_line(line.strip()) for line in lines]
+def noise(file, ofile_suffix):
     noise_injector = NoiseInjector(tgts)
-    
-    srcs = []
-    aligns = []
-    for tgt in tgts:
-        src, align = noise_injector.inject_noise(tgt)
-        srcs.append(src)
-        aligns.append(align)
-    
-    save_file('{}.src'.format(ofile_suffix), srcs)
-    save_file('{}.tgt'.format(ofile_suffix), tgts)
-    save_file('{}.forward'.format(ofile_suffix), aligns)
+    with open(ofile_suffix+'.src') as src_ofile, open(ofile_suffix+'.tgt') as tgt_ofile, open(ofile_suffix+'.forward') as align_ofile:
+        for line in file:
+            tgt=tokenize_line(line.strip())
+            src, align = noise_injector.inject_noise(tgt)
+            tgt_ofile.write(' '.join(tgt) + '\n')
+            src_ofile.write(' '.join(src) + '\n')
+            align_ofile.write(' '.join(align) + '\n')     
 
-import argparse
-
-parser=argparse.ArgumentParser()
-parser.add_argument('-e', '--epoch', type=int, default=10)
-parser.add_argument('-s', '--seed', type=int, default=2468)
-
-args = parser.parse_args()
-np.random.seed(args.seed)
 if __name__ == '__main__':
+    import argparse
+
+    parser=argparse.ArgumentParser()
+    parser.add_argument("input",  default='data/train_himono.tgt', nargs='?',help="input filename")
+    parser.add_argument("output", default='data_art/train_himono_', nargs='?', help="output filename")
+
+    parser.add_argument('-e', '--epoch', type=int, default=10)
+    parser.add_argument('-s', '--seed', type=int, default=2468)
+
+    args = parser.parse_args()
+    np.random.seed(args.seed)
+
     print("epoch={}, seed={}".format(args.epoch, args.seed))
 
-    filename = './data/train_1b.tgt'
-    ofile_suffix = './data_art/train_1b_{}'.format(args.epoch)
-
-    noise(filename, ofile_suffix)
+    ofile_suffix = args.output+str(args.epoch)
+    file=open(args.input)
+    noise(file, ofile_suffix)
 
